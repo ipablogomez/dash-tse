@@ -1,0 +1,9 @@
+.VirtualizedSelectOption {
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden; 
+  }
+
+.Select-value{
+    margin-right: 30px;
+  }
