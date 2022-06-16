@@ -119,15 +119,17 @@ def display_selected_data(click_info,figure):
     [Input("all_sites", "clickData")],
     [State("modal", "is_open"),State('all_sites','figure'),State('asset_dict','data')],
 )
-def toggle_modal(n1,  is_open, figure):
+def toggle_modal(n1,  is_open, figure,asset_dict):
     if n1 is not None:
+        asset_df = DataFrame.from_dict(asset_dict)
         url = '/site'
         info_dict = dict(n1)
         curve_number  = info_dict['points'][0]['curveNumber']
         route_name = figure['data'][curve_number]['name']
         hover_data = figure['data'][curve_number]['hovertemplate']
         site_name = re.search('fdcsite_name=(.*)<br>time', hover_data)
-        params = {'district':'ASHLAND', 'route':route_name, 'site':site_name.group(1)} 
+        distric = asset_df[(asset_df.route_name == route_name) & (asset_df.fdcsite_name == site_name.group(1))].district
+        params = {'district':distric, 'route':route_name, 'site':site_name.group(1)} 
         url_parts = list(urlparse.urlparse(url))
         query = dict(urlparse.parse_qsl(url_parts[4]))
         query.update(params)
