@@ -129,7 +129,8 @@ def toggle_modal(n1,  is_open, figure,asset_dict):
         hover_data = figure['data'][curve_number]['hovertemplate']
         site_name = re.search('fdcsite_name=(.*)<br>time', hover_data)
         distric = asset_df[(asset_df.route_name == route_name) & (asset_df.fdcsite_name == site_name.group(1))].district
-        params = {'district':distric, 'route':route_name, 'site':site_name.group(1)} 
+ 
+        params = {'district':distric.iloc[0], 'route':route_name, 'site':site_name.group(1)} 
         url_parts = list(urlparse.urlparse(url))
         query = dict(urlparse.parse_qsl(url_parts[4]))
         query.update(params)
