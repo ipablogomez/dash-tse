@@ -93,7 +93,7 @@ def multiple_rolling_calc_chart(df,groupby):
     fig = go.Figure()
     for site, group in  df.groupby(groupby):
         fig.add_trace(go.Scatter(x=group["time"] , y=group["seven_days_avg_difference"] , name= site,fill='tozeroy',
-            hovertemplate="%s<br>Date=%%{x}<br>Variance=%%{y}<br><a href='https://www.google.com/'>Google</a><extra></extra>"% site,
+            hovertemplate="%s<br>Date=%%{x}<br>Variance=%%{y}<br><extra></extra>"% site,
             hoverinfo ='skip',
             ))
     

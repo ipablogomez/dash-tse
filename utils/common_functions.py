@@ -1,4 +1,4 @@
-from databricks import sql
+from databricks import sql as adb_sql
 from pandas import DataFrame
 
 def data_bars(df, column):
@@ -37,7 +37,7 @@ def data_bars(df, column):
     return styles
 
 def get_from_adb(adb_sql_params,query):
-    with sql.connect(
+    with adb_sql.connect(
         adb_sql_params["server_hostname"],
         adb_sql_params["http_path"],
         adb_sql_params["access_token"],

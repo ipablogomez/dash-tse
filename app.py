@@ -104,8 +104,8 @@ navbar = dbc.Navbar(
 
 modal = dbc.Modal(
             [
-                #dbc.ModalHeader(dbc.ModalTitle("Header")),
-                dbc.ModalHeader("", id = "modal-content"),
+                dbc.ModalHeader(dbc.ModalTitle("Site")),
+                dbc.ModalBody("", id = "modal-content"),
                 dbc.ModalFooter(
                     dbc.NavLink("Go Site", id = "modal-link")
                 ),

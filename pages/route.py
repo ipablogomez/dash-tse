@@ -19,10 +19,10 @@ filters  = dbc.Row([
 ])
 
 cards = dbc.Row([
-        dbc.Col(templates.card("Average Volume Rate", 'r_card1', 'MCF', 'rgb(4, 132, 108)'),width="auto"),
-        dbc.Col(templates.card("Total Volume", "r_card2", 'MCF', 'rgb(4, 132, 108)'),width="auto"),
-        dbc.Col(templates.card("Total Predicted Volume","r_card3", 'MCF','rgb(227, 123, 4)'),width="auto"),
-        dbc.Col(templates.card("Anomaly Count","r_card4", '#', 'rgb(227, 123, 4)'),width="auto"),
+        dbc.Col(templates.card("Average Volume Rate", 'r_card1', 'MCF', 'rgb(4, 132, 108)','24rem'),width="auto"),
+        dbc.Col(templates.card("Total Volume", "r_card2", 'MCF', 'rgb(4, 132, 108)','27rem'),width="auto"),
+        dbc.Col(templates.card("Total Predicted Volume","r_card3", 'MCF','rgb(227, 123, 4)','27rem'),width="auto"),
+        dbc.Col(templates.card("Anomaly Count","r_card4", '#', 'rgb(227, 123, 4)','20rem'),width="auto"),
        
 ])
 
@@ -31,8 +31,6 @@ layout = dbc.Container([
     dbc.Row(dbc.Col(filters), align="center"),
 
     dbc.Row(dbc.Col(cards), align="center",style={"padding-top":"15px"}),
-
-    dbc.Row(dbc.Col(html.Div([ dcc.Markdown(""" **Data**  """), html.Pre(id='selected-data',)]))),
             
     dbc.Row(dcc.Graph(id='all_sites',style={"height":"500px","padding-top":"15px"})),
 
@@ -116,6 +114,7 @@ def display_selected_data(click_info,figure):
 @callback(
     Output("modal", "is_open"),
     Output("modal-link","href"),
+    Output("modal-content","children"),
     [Input("all_sites", "clickData")],
     [State("modal", "is_open"),State('all_sites','figure'),State('asset_dict','data')],
 )
@@ -129,15 +128,15 @@ def toggle_modal(n1,  is_open, figure,asset_dict):
         hover_data = figure['data'][curve_number]['hovertemplate']
         site_name = re.search('fdcsite_name=(.*)<br>time', hover_data)
         distric = asset_df[(asset_df.route_name == route_name) & (asset_df.fdcsite_name == site_name.group(1))].district
- 
+        
         params = {'district':distric.iloc[0], 'route':route_name, 'site':site_name.group(1)} 
         url_parts = list(urlparse.urlparse(url))
         query = dict(urlparse.parse_qsl(url_parts[4]))
         query.update(params)
         url_parts[4] = urlencode(query)
 
-        return not is_open, urlparse.urlunparse(url_parts)
-    return is_open, ""    
+        return not is_open, urlparse.urlunparse(url_parts), site_name.group(1)
+    return is_open, "", ""    
 
 @callback(
     Output('anomaly_count_table','data'),

@@ -1,3 +1,3 @@
 USERNAME_PASSWORD_PAIRS = {
-     'admin': 'admin'
+     'admin': 'Te@M!n+'
 }

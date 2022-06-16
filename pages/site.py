@@ -1,4 +1,4 @@
-from dash import dcc, html, Input, Output, callback, callback_context
+from dash import dcc, html, Input, Output, State, callback, callback_context
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 import urllib.parse as urlparse
@@ -22,10 +22,10 @@ filters  = dbc.Row([
 
 
 cards = dbc.Row([
-        dbc.Col(templates.card("Average Volume Rate", 's_card1', 'MCF', 'rgb(4, 132, 108)'),width="auto"),
-        dbc.Col(templates.card("Total Volume", "s_card2", 'MCF', 'rgb(4, 132, 108)'),width="auto"),
-        dbc.Col(templates.card("Total Predicted Volume","s_card3", 'MCF','rgb(227, 123, 4)'),width="auto"),
-        dbc.Col(templates.card("Anomaly Count","s_card4", '#', 'rgb(227, 123, 4)'),width="auto"),
+        dbc.Col(templates.card("Average Volume Rate", 's_card1', 'MCF', 'rgb(4, 132, 108)','24rem'),width="auto"),
+        dbc.Col(templates.card("Total Volume", "s_card2", 'MCF', 'rgb(4, 132, 108)','27rem'),width="auto"),
+        dbc.Col(templates.card("Total Predicted Volume","s_card3", 'MCF','rgb(227, 123, 4)','27rem'),width="auto"),
+        dbc.Col(templates.card("Anomaly Count","s_card4", '#', 'rgb(227, 123, 4)','20rem'),width="auto"),
        
 ])
 
@@ -72,8 +72,12 @@ def set_routes_options(url,selected_district,asset_dict):
 
     # URL Tratement 
     parsed = urlparse.urlparse(url)
-    parameters = urlparse.parse_qs(parsed.query)   
-    if 'route' in parameters:
+    parameters = urlparse.parse_qs(parsed.query)
+    district_url = ''
+    if 'district' in parameters:
+        district_url = parameters['district'][0]
+
+    if 'route' in parameters and selected_district == district_url:
         value = parameters['route'][0]
     
     return options, value
@@ -95,8 +99,11 @@ def set_fdc_sites_options(url,selected_route,asset_dict):
 
     # URL Tratement 
     parsed = urlparse.urlparse(url)
-    parameters = urlparse.parse_qs(parsed.query)   
-    if 'site' in parameters:
+    parameters = urlparse.parse_qs(parsed.query) 
+    route_url = ''
+    if 'route' in parameters:
+        route_url = parameters['district'][0]
+    if 'site' in parameters and selected_route == route_url:
         value = parameters['site'][0]
     
     return options, value
@@ -108,8 +115,8 @@ def set_fdc_sites_options(url,selected_route,asset_dict):
     Output('s_card2','children'),
     Output('s_card3','children'),
     Output('s_card4','children'),
-    Input('district', 'value'),
-    Input('routes', 'value'),
+    State('district', 'value'),
+    State('routes', 'value'),
     Input('fdc_sites', 'value'),
     Input('date-picker-range','start_date'),
     Input('date-picker-range','end_date'),

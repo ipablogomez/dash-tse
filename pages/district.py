@@ -6,10 +6,10 @@ from utils.common_functions import metrics, data_bars, rolling_calc
 from components import templates, charts
 
 cards = dbc.Row([
-        dbc.Col(templates.card("Average Volume Rate", 'd_card1', 'MCF', 'rgb(4, 132, 108)'),width="auto"),
-        dbc.Col(templates.card("Total Volume", "d_card2", 'MCF', 'rgb(4, 132, 108)'),width="auto"),
-        dbc.Col(templates.card("Total Predicted Volume","d_card3", 'MCF','rgb(227, 123, 4)'),width="auto"),
-        dbc.Col(templates.card("Anomaly Count","d_card4", '#', 'rgb(227, 123, 4)'),width="auto"),
+        dbc.Col(templates.card("Average Volume Rate", 'd_card1', 'MCF', 'rgb(4, 132, 108)','24rem'),width="auto"),
+        dbc.Col(templates.card("Total Volume", "d_card2", 'MCF', 'rgb(4, 132, 108)','27rem'),width="auto"),
+        dbc.Col(templates.card("Total Predicted Volume","d_card3", 'MCF','rgb(227, 123, 4)','27rem'),width="auto"),
+        dbc.Col(templates.card("Anomaly Count","d_card4", '#', 'rgb(227, 123, 4)','20rem'),width="auto"),
        
 ])
 
